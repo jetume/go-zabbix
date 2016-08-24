@@ -33,8 +33,11 @@ type Client struct {
 // Host header of requests to the Zabbix server. For example, you can set zabbixURL
 // to "http://127.0.0.1" and zabbixHost to "zabbix.example.com" and use the virtualhost.
 // If you pass a non-nil value to logger, the debug logs are printed with that logger.
-func NewClient(zabbixURL, zabbixHost string, logger Logger) *Client {
+func NewClient(zabbixURL, zabbixHost string, logger Logger, httpClient *http.Client) *Client {
 	client := new(Client)
+	if httpClient != nil {
+		client.client = *httpClient
+	}
 	if strings.HasSuffix(zabbixURL, "/") {
 		client.endpointURL = zabbixURL + jsonrpcEndpoint
 	} else {
