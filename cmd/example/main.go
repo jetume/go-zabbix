@@ -10,7 +10,7 @@ import (
 	"time"
 
 	"github.com/AlekSi/zabbix-sender"
-	"github.com/hnakamur/go-zabbix"
+	"github.com/jetume/go-zabbix"
 )
 
 func getHostCount(client *zabbix.Client) (int64, error) {
@@ -289,7 +289,7 @@ func (l myLogger) Log(v interface{}) {
 func main() {
 	logger := myLogger{log.New(os.Stdout, "", log.LstdFlags|log.Lmicroseconds)}
 
-	client := zabbix.NewClient("http://localhost/zabbix", "", logger)
+	client := zabbix.NewClient("http://localhost/zabbix", "", logger, nil)
 	err := client.Login("Admin", "zabbix")
 	if err != nil {
 		logger.Fatal(err)
